@@ -367,6 +367,10 @@ EXTERN CoolDataType CoolData;
 EXTERN int RadiativeCoolingModel;
 EXTERN int use_grackle;
 
+EXTERN int use_dengo;
+EXTERN double dengo_reltol;
+EXTERN char* dengo_data_file;
+
 /* Cloudy cooling parameters and data. */
 
 EXTERN CloudyCoolingDataType CloudyCoolingData;
@@ -426,6 +430,7 @@ EXTERN int MixSpeciesAndColors;
 
 /* Glover chemistry/cooling network flags */
 EXTERN int GloverChemistryModel;  // 0 is off, on is 1-7, excluding 6
+EXTERN int DengoChemistryModel;  // 0 is off, on is 1-7, excluding 6
 
 /* Multi-element metallicity field flag and count. */
 

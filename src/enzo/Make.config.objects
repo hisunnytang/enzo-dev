@@ -522,6 +522,7 @@ OBJS_CONFIG_LIB = \
         Grid_GetEnclosedMassInShell.o \
         Grid_GetProjectedBoundaryFluxes.o \
         Grid_GrackleWrapper.o \
+        Grid_DengoWrapper.o \
         Grid_GrackleCustomCoolRate.o \
         Grid_GravityEquilibriumTestInitializeGrid.o \
         Grid_Group_WriteGridInterpolate.o \
@@ -538,6 +539,7 @@ OBJS_CONFIG_LIB = \
         Grid_IdentifyPhysicalQuantities.o \
 	Grid_IdentifyRadiativeTransferFields.o \
         Grid_IdentifySpeciesFields.o \
+        Grid_IdentifyDengoSpeciesFields.o \
 	Grid_ImplosionInitializeGrid.o \
 	Grid_InheritProperties.o \
 	Grid_InitializeGravitatingMassField.o \

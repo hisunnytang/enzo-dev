@@ -597,6 +597,8 @@ int ReadParameterFile(FILE *fptr, TopGridData &MetaData, float *Initialdt)
     ret += sscanf(line, "SGScoeffSSemf = %"FSYM, &SGScoeffSSemf);
 
 
+    ret += sscanf(line, "dengo_reltol = %"ISYM, &dengo_reltol);
+
     ret += sscanf(line, "RadiativeCooling = %"ISYM, &RadiativeCooling);
     ret += sscanf(line, "RadiativeCoolingModel = %"ISYM, &RadiativeCoolingModel);
     ret += sscanf(line, "GadgetEquilibriumCooling = %"ISYM, &GadgetEquilibriumCooling);
@@ -1746,6 +1748,61 @@ int ReadParameterFile(FILE *fptr, TopGridData &MetaData, float *Initialdt)
   if( ((RefineRegionTimeType==1) || (MustRefineRegionTimeType==1) || (CoolingRefineRegionTimeType==1)) && (ComovingCoordinates==0)){
     ENZO_FAIL("You cannot have ComovingCoordinates turned off if your RegionTimeType is set to 1!");
   }
+
+#ifdef USE_DENGO
+  /* If using Dengo chemistry and cooling library, override all other 
+     cooling machinery and do a translation of some of the parameters. */
+  if (use_dengo == TRUE) {
+    /*
+    dengo_data->use_dengo                    = (Eint32) use_dengo;
+    dengo_data->HydrogenFractionByMass         = (double) CoolData.HydrogenFractionByMass;
+    dengo_data->DeuteriumToHydrogenRatio       = (double) CoolData.DeuteriumToHydrogenRatio;
+    dengo_data->SolarMetalFractionByMass       = (double) CoolData.SolarMetalFractionByMass;
+    */
+
+    // Initialize units structure.
+    FLOAT a_value, dadt;
+    a_value = 1.0;
+    code_units dengo_units;
+    dengo_units.a_units = 1.0;
+    if (GetUnits(&DensityUnits, &LengthUnits, &TemperatureUnits,
+                 &TimeUnits, &VelocityUnits, MetaData.Time) == FAIL) {
+      ENZO_FAIL("Error in GetUnits.\n");
+    }
+    if (ComovingCoordinates) {
+      if (CosmologyComputeExpansionFactor(MetaData.Time, &a_value, 
+                                          &dadt) == FAIL) {
+        ENZO_FAIL("Error in CosmologyComputeExpansionFactors.\n");
+      }
+      dengo_units.a_units            = (double) (1.0 / (1.0 + InitialRedshift));
+    }
+    dengo_units.comoving_coordinates = (Eint32) ComovingCoordinates;
+    dengo_units.density_units        = (double) DensityUnits;
+    dengo_units.length_units         = (double) LengthUnits;
+    dengo_units.time_units           = (double) TimeUnits;
+    dengo_units.velocity_units       = (double) VelocityUnits;
+    dengo_units.a_value              = (double) a_value;
+
+    // Initialize chemistry structure.
+    //if (initialize_chemistry_data(&dengo_units) == FAIL) {
+    //  ENZO_FAIL("Error in Dengo initialize_chemistry_data.\n");
+    //}
+    //
+
+    // unlike grackle, the rate data object is set and
+    // released by the dengo_solve_chemistry routine
+    // so all we need to do here is to assign the units
+
+  }  // if (dengo_data->use_dengo == TRUE)
+
+  else {
+    if (use_dengo == TRUE) {
+      ENZO_FAIL("Error: Enzo must be compiled with 'make dengo-yes' to run with use_dengo = 1.\n");
+    }
+  }
+#endif // USE_DENGO
+
+
 
 
 

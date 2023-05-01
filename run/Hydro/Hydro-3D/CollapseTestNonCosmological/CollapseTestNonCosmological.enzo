@@ -44,8 +44,8 @@ GravitationalConstant = 1.39698e-3     // 4*pi*G_{cgs}*DensityUnits*TimeUnits^2
 #
 #  set I/O and stop/start parameters
 #
-StopTime          = 7
-dtDataDump        = 0.1
+StopTime          = 20 
+#dtDataDump        = 0.1
 DataDumpDir       = DD
 DataDumpName      = DD
 OutputTemperature = 1                  // Output temperature field.
@@ -63,25 +63,38 @@ HydroMethod                 = 0        // PPM
 #
 #  chemistry/cooling
 #
-MultiSpecies                = 0        // chemistry off
-RadiativeCooling            = 0        // cooling off
+MultiSpecies                = 2        // chemistry off
+RadiativeCooling            = 1        // cooling off
 #
 #  set grid refinement parameters
 #
 StaticHierarchy           = 0          // dynamic hierarchy
-MaximumRefinementLevel    = 10         // use up to 10 levels
+MaximumRefinementLevel    = 25         // use up to 10 levels
 RefineBy                  = 2          // refinement factor
 CellFlaggingMethod        = 2 6        // use baryon mass and Truelove criterion for refinement 
 MinimumEfficiency         = 0.3
-#OutputFirstTimeAtLevel    = 4         // output when level 4, 5, 6, etc reached (commented out for now)
-StopFirstTimeAtLevel      = 10         // stop if/when level 10 reached
-MinimumOverDensityForRefinement = 8    // times the initial density
+OutputFirstTimeAtLevel    = 4         // output when level 4, 5, 6, etc reached (commented out for nw)
+StopFirstTimeAtLevel      = 25         // stop if/when level 10 reached
+
+OutputOnDensity = 1
+StartDensityOutputs = -20
+CurrentDensityOutput = -20
+IncrementDensityOutput = 0.5
+StopFirstAtDensity = -8.0
+
+#MinimumOverDensityForRefinement = 16    // times the initial density
 RefineByJeansLengthSafetyFactor = 4    // resolve Jeans length by 4 cells (used with CellFlaggingMethod 6)
 MinimumMassForRefinementLevelExponent = -0.3  // see definition in user guide
 #
 #  set some global parameters
 #
-GreensFunctionMaxNumber   = 10         // # of greens function at any one time
+#GreensFunctionMaxNumber   = 40         // # of greens function at any one time
 
 
-DatabaseLocation = /home/mturk/.enzo/my_runs.db
+use_grackle = 1
+CIECooling = 1
+ThreeBodyRate = 4
+
+UseCoolingTimestep = 0
+
+H2OpticalDepthApproximation = 1

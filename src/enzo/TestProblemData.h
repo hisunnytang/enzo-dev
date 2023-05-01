@@ -66,6 +66,7 @@ struct TestProblemDataType
 
   /* simon glover chemistry+cooling */
   int GloverChemistryModel;
+  int DengoChemistryModel;
   
   float StartOfHighTempRegime;
 

@@ -537,6 +537,10 @@ int WriteParameterFile(FILE *fptr, TopGridData &MetaData, char *name = NULL)
   fprintf(fptr, "SGScoeffNLuNormedEnS2Star      = %"FSYM"\n", SGScoeffNLuNormedEnS2Star);
   fprintf(fptr, "SGScoeffNLb                    = %"FSYM"\n", SGScoeffNLb);
   fprintf(fptr, "use_grackle                 = %"ISYM"\n", use_grackle);
+#ifdef USE_DENGO
+  fprintf(fptr, "use_dengo                      = %"ISYM"\n", use_dengo);
+  fprintf(fptr, "dengo_reltol                   = %"ISYM"\n", dengo_reltol);
+#endif
   fprintf(fptr, "RadiativeCooling               = %"ISYM"\n", RadiativeCooling);
   fprintf(fptr, "RadiativeCoolingModel          = %"ISYM"\n", RadiativeCoolingModel);
   fprintf(fptr, "GadgetEquilibriumCooling       = %"ISYM"\n", GadgetEquilibriumCooling);

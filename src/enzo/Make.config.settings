@@ -41,6 +41,7 @@
 #    CONFIG_SET_ACCELERATION_BOUNDARY
 #    CONFIG_ENZO_PERFORMANCE
 #    CONFIG_GRACKLE
+#    CONFIG_DENGO
 #    CONFIG_LOG2ALLOC
 #    CONFIG_UUID
 #
@@ -315,6 +316,15 @@
 #----------------------------------------------------------------------- 
  
      CONFIG_GRACKLE = no
+
+#======================================================================= 
+# CONFIG_DENGO
+#======================================================================= 
+#    yes           Compile with Dengo support
+#    no            Compile without Dengo support
+#----------------------------------------------------------------------- 
+ 
+     CONFIG_DENGO = no
 
 #======================================================================= 
 # CONFIG_LOG2ALLOC

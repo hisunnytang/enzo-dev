@@ -44,7 +44,7 @@ OUTPUT   = out.compile
 
 ENZO_DIR = .
 MODULES  = 
-VERBOSE  = 0
+VERBOSE  = 1
 ETAGS_COMMAND = "0"
 
 LFLAGS=--header-file=libconfig/scanner.h --prefix=libconfig_yy

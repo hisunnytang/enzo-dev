@@ -40,6 +40,16 @@ int grid::MultiSpeciesHandler()
   }
 #endif
 
+#ifdef USE_DENGO
+/* BeginDengo */
+if (this->DengoWrapper() == FAIL) {
+    ENZO_FAIL("Error in DengoWrapper.\n");
+}else{
+    return SUCCESS;
+}
+/* EndDengo */
+#endif
+
   if (MultiSpecies && RadiativeCooling ) {
     int RTCoupledSolverIntermediateStep = FALSE;
     this->SolveRateAndCoolEquations(RTCoupledSolverIntermediateStep);

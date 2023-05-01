@@ -208,6 +208,11 @@ help-config:
 	@echo "      gmake grackle-yes"
 	@echo "      gmake grackle-no"
 	@echo
+	@echo "   Set whether to compile with support for the Dengo chemistry and cooling library"
+	@echo
+	@echo "      gmake dengo-yes"
+	@echo "      gmake dengo-no"
+	@echo
 	@echo "   Set whether to compile with grid/particle arrays allocated in sizes of powers of 2"
 	@echo
 	@echo "      gmake log2alloc-yes"
@@ -284,6 +289,7 @@ show-config:
 	@echo "   CONFIG_GRAVITY_4S  [gravity-4s-{yes,no}]                  : $(CONFIG_GRAVITY_4S)"
 	@echo "   CONFIG_ENZO_PERFORMANCE  [enzo-performance-{yes,no}]      : $(CONFIG_ENZO_PERFORMANCE)"
 	@echo "   CONFIG_GRACKLE  [grackle-{yes,no}]                        : $(CONFIG_GRACKLE)"
+	@echo "   CONFIG_DENGO    [dengo-{yes,no}]                          : $(CONFIG_DENGO)"
 	@echo "   CONFIG_LOG2ALLOC  [log2alloc-{yes,no}]                    : $(CONFIG_LOG2ALLOC)"
 	@echo "   CONFIG_UUID  [uuid-{yes,no}]                              : $(CONFIG_UUID)"
 	@echo
@@ -925,6 +931,22 @@ CONFIG_GRACKLE-%: suggest-clean
 	$(MAKE)  show-config | grep CONFIG_GRACKLE; \
 	echo
 
+#-----------------------------------------------------------------------
+
+VALID_DENGO = dengo-yes dengo-no
+.PHONY: $(VALID_DENGO)
+
+dengo-yes: CONFIG_DENGO-yes
+dengo-no: CONFIG_DENGO-no
+dengo-%:
+	@printf "\n\tInvalid target: $@\n\n\tValid targets: [$(VALID_DENGO)]\n\n"
+CONFIG_DENGO-%: suggest-clean
+	@tmp=.config.temp; \
+        grep -v CONFIG_DENGO $(MAKE_CONFIG_OVERRIDE) > $${tmp}; \
+        mv $${tmp} $(MAKE_CONFIG_OVERRIDE); \
+        echo "CONFIG_DENGO = $*" >> $(MAKE_CONFIG_OVERRIDE); \
+	$(MAKE)  show-config | grep CONFIG_DENGO; \
+	echo
 
 #-----------------------------------------------------------------------
 

@@ -755,6 +755,7 @@ gradient force to gravitational force for one-zone collapse test. */
 /* Wrap the grackle chemistry solver. */
 
    int GrackleWrapper();
+   int DengoWrapper();
 
 /* Handle the selection of shock finding algorithm */
 
@@ -1838,6 +1839,11 @@ int TransferSubgridActiveParticles(grid* Subgrids[], int NumberOfSubgrids,
 			    int &HeINum, int &HeIINum, int &HeIIINum,
 			    int &HMNum, int &H2INum, int &H2IINum,
                             int &DINum, int &DIINum, int &HDINum);
+
+   /* BeginDengo */
+     int IdentifyDengoSpeciesFields(int &H2_1Num,int &H2_2Num,int &H_1Num,int &H_2Num,int &H_m0Num,int &He_1Num,int   &He_2Num,int &He_3Num,int &deNum);
+     /* EndDengo */
+
 
   /* Identify shock fields. */
   int IdentifyShockSpeciesFields(int &MachNum,int &PSTempNum, int &PSDenNum);

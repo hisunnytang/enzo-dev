@@ -913,6 +913,36 @@
 	$(error Illegal value '$(CONFIG_ENZO_PERFORMANCE)' for $$(CONFIG_ENZO_PERFORMANCE))
     endif
 
+#-----------------------------------------------------------------------
+# DETERMINE USE DENGO
+#-----------------------------------------------------------------------
+
+    ERROR_DENGO = 1
+
+    # compilers and settings if DENGO is yes
+
+    ifeq ($(CONFIG_DENGO),yes)
+        ERROR_DENGO = 0
+        ASSEMBLE_DENGO_DEFINES     = -DUSE_DENGO
+        ASSEMBLE_DENGO_INCLUDES    = $(MACH_INCLUDES_DENGO)
+        ASSEMBLE_DENGO_LIBS        = $(MACH_LIBS_DENGO)
+    endif
+
+    # compilers and settings if GRAVITY_4S is no
+
+    ifeq ($(CONFIG_DENGO),no)
+        ERROR_DENGO = 0
+        ASSEMBLE_DENGO_DEFINES =
+    endif
+
+    # error if CONFIG_DENGO is incorrect
+
+    ifeq ($(ERROR_DENGO),1)
+       .PHONY: error_compilers
+       error_compilers:
+	$(error Illegal value '$(CONFIG_DENGO)' for $$(CONFIG_DENGO))
+    endif
+
 
 #-----------------------------------------------------------------------
 # DETERMINE USE GRACKLE
@@ -1061,6 +1091,7 @@
               $(ASSEMBLE_GRAVITY_4S_DEFINES) \
               $(ASSEMBLE_ENZO_PERFORMANCE_DEFINES) \
               $(ASSEMBLE_GRACKLE_DEFINES) \
+              $(ASSEMBLE_DENGO_DEFINES) \
               $(ASSEMBLE_LOG2ALLOC_DEFINES) \
               $(ASSEMBLE_UUID_DEFINES) \
               $(ASSEMBLE_ACCELERATION_BOUNDARY_DEFINES)
@@ -1074,6 +1105,7 @@
                $(ASSEMBLE_NEW_PROBLEM_TYPES_INCLUDES) \
                $(ASSEMBLE_PAPI_INCLUDES) \
                $(ASSEMBLE_GRACKLE_INCLUDES) \
+               $(ASSEMBLE_DENGO_INCLUDES) \
                $(MAKEFILE_INCLUDES)   -I.
 
     OBJS_LIB = $(OBJS_CONFIG_LIB) \
@@ -1092,6 +1124,7 @@
            $(ASSEMBLE_PYTHON_LIBS) \
            $(ASSEMBLE_NEW_PROBLEM_TYPES_LIBS) \
            $(ASSEMBLE_CUDA_LIBS) \
-           $(ASSEMBLE_GRACKLE_LIBS)
+           $(ASSEMBLE_GRACKLE_LIBS) \
+           $(ASSEMBLE_DENGO_LIBS)
 
 

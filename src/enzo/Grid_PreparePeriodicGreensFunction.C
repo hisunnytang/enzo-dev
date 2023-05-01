@@ -83,7 +83,7 @@ int grid::PreparePeriodicGreensFunction(region *GreensRegion)
 		      GreensRegion->RegionDim[2]);
  
     GreensRegion->Data = new float[size];
- 
+    
     /* Set Greens' function. */
  
     int n = 0, DomainDim[] = {1,1,1};

@@ -30,6 +30,12 @@ extern "C" {
 #include <grackle.h>
 }
 #endif
+
+#ifdef USE_DENGO
+#include <dengo_bechem_primordial_solver.h>
+#endif
+
+
 /* #include <stdlib.h> */
 #include <stdio.h>
 #include <string.h>

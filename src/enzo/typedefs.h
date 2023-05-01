@@ -180,7 +180,19 @@ const field_type
   ImPsi = 102,
   FDMDensity = 103,
 
-  FieldUndefined  = 104;
+  /* BeginDengo */
+  He_3Density = 104,
+  He_2Density = 105,
+  H_m0Density = 106,
+  H2_2Density = 107,
+  H_2Density = 108,
+  He_1Density = 109,
+  H_1Density = 110,
+  deDensity = 111,
+  H2_1Density = 112,
+  FieldUndefined = 113;
+   /* EndDengo */
+
 
 /*
 enum field_type {Density, TotalEnergy, InternalEnergy, Pressure,

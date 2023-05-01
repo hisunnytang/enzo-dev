@@ -18,7 +18,7 @@ GravityBoundaryFaces      = 1 1 1    // isolating in all directions
 GravityBoundaryRestart     = 0       // read boundary restart if possible
 GravityBoundaryName       = potbdry  // default boundary restart file
 #WritePotential             = 1
-WritePotential             = 0
+#WritePotential             = 0
 #
 # problem parameters
 #

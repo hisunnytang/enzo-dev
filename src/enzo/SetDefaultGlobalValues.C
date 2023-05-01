@@ -470,6 +470,7 @@ int SetDefaultGlobalValues(TopGridData &MetaData)
   H2OpticalDepthApproximation = 1;
   H2FormationOnDust           = FALSE;
   GloverChemistryModel        = 0;                 // 0ff
+  DengoChemistryModel         = 0;                 // 0ff
   CRModel                     = 0;                 // off                                                                          
   CRDiffusion                 = 0;                 // off                                                                          
   CRHeating                   = 0;                 // off                                                                          
@@ -899,6 +900,7 @@ int SetDefaultGlobalValues(TopGridData &MetaData)
   TestProblemData.MultiMetalsField2_Fraction = tiny_number;
 
   TestProblemData.GloverChemistryModel = 0;
+  TestProblemData.DengoChemistryModel = 0;
   // This is for the gas in the surrounding medium, for the blast wave problem.
   TestProblemData.CI_Fraction = tiny_number;
   TestProblemData.CII_Fraction = tiny_number;

@@ -193,6 +193,28 @@ int grid::SolveHydroEquations(int CycleNumber, int NumberOfSubgrids,
     if (Galaxy1ColourNum != -1) colnum[NumberOfColours++] = Galaxy1ColourNum;
     if (Galaxy2ColourNum != -1) colnum[NumberOfColours++] = Galaxy2ColourNum;
 
+    /* BeginDengo */
+    if(TestProblemData.DengoChemistryModel){
+        // Declarations for Dengo Cooling
+        int H2_1Num,H2_2Num,H_1Num,H_2Num,H_m0Num,He_1Num,He_2Num,He_3Num,deNum;
+
+        if (IdentifyDengoSpeciesFields(H2_1Num,H2_2Num,H_1Num,H_2Num,H_m0Num,He_1Num,He_2Num,He_3Num,deNum) == FAIL ){
+        
+        ENZO_FAIL("Error in IdentifyDengoSpeciesFields.");
+        }
+
+        // Not sure I know what color field does yet...
+        colnum[NumberOfColours++] = H2_1Num;
+        colnum[NumberOfColours++] = H2_2Num;
+        colnum[NumberOfColours++] = H_1Num;
+        colnum[NumberOfColours++] = H_2Num;
+        colnum[NumberOfColours++] = H_m0Num;
+        colnum[NumberOfColours++] = He_1Num;
+        colnum[NumberOfColours++] = He_2Num;
+        colnum[NumberOfColours++] = He_3Num;
+        colnum[NumberOfColours++] = deNum;
+    }
+    /* EndDengo */
 
     /* Add Simon Glover's chemistry species as color fields */
 

@@ -72,7 +72,18 @@ int CollapseTestInitialize(FILE *fptr, FILE *Outfptr,
   const char *DIIName   = "DII_Density";
   const char *HDIName   = "HDI_Density";
   const char *MetalName = "Metal_Density";
-
+  
+#ifdef USE_DENGO
+  const char *H2_1Name = "H2I_Density";
+  const char *H2_2Name = "H2II_Density";
+  const char *H_1Name  = "HI_Density";
+  const char *H_2Name  = "HII_Density";
+  const char *H_m0Name = "HM_Density";
+  const char *He_1Name = "HeI_Density";
+  const char *He_2Name = "HeII_Density";
+  const char *He_3Name = "HeIII_Density";
+  const char *deName = "Electron_Density";
+#endif
   /* declarations */
 
   char  line[MAX_LINE_LENGTH];
@@ -540,6 +551,7 @@ int CollapseTestInitialize(FILE *fptr, FILE *Outfptr,
   DataLabel[count++] = (char*) Vel1Name;
   DataLabel[count++] = (char*) Vel2Name;
   DataLabel[count++] = (char*) Vel3Name;
+
   if (MultiSpecies) {
     DataLabel[count++] = (char*) ElectronName;
     DataLabel[count++] = (char*) HIName;
@@ -558,6 +570,22 @@ int CollapseTestInitialize(FILE *fptr, FILE *Outfptr,
       DataLabel[count++] = (char*) HDIName;
     }
   }  // if Multispecies
+  
+#ifdef USE_DENGO
+    DataLabel[count++] = (char*) H2_1Name;
+    DataLabel[count++] = (char*) H2_2Name;
+    DataLabel[count++] = (char*) H_1Name;
+    DataLabel[count++] = (char*) H_2Name;
+    DataLabel[count++] = (char*) H_m0Name;
+    DataLabel[count++] = (char*) He_1Name;
+    DataLabel[count++] = (char*) He_2Name;
+    DataLabel[count++] = (char*) He_3Name;
+    DataLabel[count++] = (char*) deName;
+
+#endif
+
+  
+  
   if (CollapseTestUseColour)
     DataLabel[count++] = (char*) ColourName;
   if (CollapseTestUseMetals)

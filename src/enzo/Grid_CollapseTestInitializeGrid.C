@@ -107,6 +107,8 @@ int grid::CollapseTestInitializeGrid(int NumberOfSpheres,
   int dim, i, j, k, m, sphere;
   int DeNum, HINum, HIINum, HeINum, HeIINum, HeIIINum, HMNum, H2INum, H2IINum,
     DINum, DIINum, HDINum, MetalNum;
+
+  int H2_1Num, H2_2Num, H_1Num, H_2Num, H_m0Num, He_1Num, He_2Num, He_3Num, deNum;
   float xdist,ydist,zdist;
 
   /* create fields */
@@ -140,6 +142,20 @@ int grid::CollapseTestInitializeGrid(int NumberOfSpheres,
       FieldType[HDINum  = NumberOfBaryonFields++] = HDIDensity;
     }
   }
+    
+#ifdef USE_DENGO
+    FieldType[H2_1Num    = NumberOfBaryonFields++] = H2_1Density;
+    FieldType[H2_2Num    = NumberOfBaryonFields++] = H2_2Density;
+    FieldType[H_1Num     = NumberOfBaryonFields++] = H_1Density;
+    FieldType[H_2Num     = NumberOfBaryonFields++] = H_2Density;
+    FieldType[H_m0Num    = NumberOfBaryonFields++] = H_m0Density;
+    FieldType[He_1Num    = NumberOfBaryonFields++] = He_1Density;
+    FieldType[He_2Num    = NumberOfBaryonFields++] = He_2Density;
+    FieldType[He_3Num    = NumberOfBaryonFields++] = He_3Density;
+    FieldType[deNum      = NumberOfBaryonFields++] = deDensity;
+#endif
+
+
   if (SphereUseMetals)
     FieldType[MetalNum = NumberOfBaryonFields++] = SNColour;
 
@@ -941,6 +957,48 @@ int grid::CollapseTestInitializeGrid(int NumberOfSpheres,
 		BaryonField[H2INum][n];
 	    }
 	  }
+
+#ifdef USE_DENGO
+	    BaryonField[H_2Num][n] = HII_Fraction *
+	      CoolData.HydrogenFractionByMass * BaryonField[0][n] *
+	      sqrt(OmegaMatterNow)/
+	      (OmegaMatterNow*BaryonMeanDensity*HubbleConstantNow);
+	    //	    (CosmologySimulationOmegaBaryonNow*HubbleConstantNow);
+      
+	    BaryonField[He_2Num][n] = HeII_Fraction *
+	      BaryonField[0][n] * 4.0 * (1.0-CoolData.HydrogenFractionByMass);
+	    BaryonField[He_3Num][n] = HeIII_Fraction *
+	      BaryonField[0][n] * 4.0 * (1.0-CoolData.HydrogenFractionByMass);
+	    BaryonField[He_1Num][n] = 
+	      (1.0 - CoolData.HydrogenFractionByMass)*BaryonField[0][n] -
+	      BaryonField[He_2Num][n] - BaryonField[He_3Num][n];
+
+	    BaryonField[H_m0Num][n] = CollapseTestInitialFractionHM *
+		BaryonField[H_2Num][n]* POW(temperature,float(0.88));
+	    BaryonField[H2_2Num][n] = CollapseTestInitialFractionH2II *
+            2.0*BaryonField[H_2Num][n]* POW(temperature,float(1.8));
+	    if (ComovingCoordinates)
+            BaryonField[H2_1Num][n] = H2I_Fraction *
+                BaryonField[0][n]*CoolData.HydrogenFractionByMass*POW(301.0,5.1)*
+                POW(OmegaMatterNow, float(1.5))/
+                (OmegaMatterNow*BaryonMeanDensity)/
+		        //	      CosmologySimulationOmegaBaryonNow/
+		        HubbleConstantNow*2.0;
+	    else
+		    BaryonField[H2_1Num][n] = H2I_Fraction * 
+                CoolData.HydrogenFractionByMass * BaryonField[0][n];
+
+	    BaryonField[H_1Num][n] = 
+            CoolData.HydrogenFractionByMass*BaryonField[0][n]
+            - BaryonField[H_2Num][n];
+	    BaryonField[H_1Num][n] -= BaryonField[H_m0Num][n]
+            + BaryonField[H2_2Num][n]
+            + BaryonField[H2_1Num][n];
+
+	    BaryonField[deNum][n] = BaryonField[H_2Num][n] + 
+            0.25*BaryonField[He_2Num][n] + 0.5*BaryonField[He_3Num][n];
+        BaryonField[deNum][n] += 0.5*BaryonField[H2_2Num][n] - BaryonField[H_m0Num][n];
+#endif // #ifdef use_dengo
 
 	  /* If there are metals, set it. */
 

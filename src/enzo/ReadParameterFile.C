@@ -597,7 +597,9 @@ int ReadParameterFile(FILE *fptr, TopGridData &MetaData, float *Initialdt)
     ret += sscanf(line, "SGScoeffSSemf = %"FSYM, &SGScoeffSSemf);
 
 
-    ret += sscanf(line, "dengo_reltol = %"ISYM, &dengo_reltol);
+
+    ret += sscanf(line, "use_dengo    = %"ISYM, &use_dengo);
+    ret += sscanf(line, "dengo_reltol = %"FSYM, &dengo_reltol);
 
     ret += sscanf(line, "RadiativeCooling = %"ISYM, &RadiativeCooling);
     ret += sscanf(line, "RadiativeCoolingModel = %"ISYM, &RadiativeCoolingModel);
@@ -1753,6 +1755,9 @@ int ReadParameterFile(FILE *fptr, TopGridData &MetaData, float *Initialdt)
   /* If using Dengo chemistry and cooling library, override all other 
      cooling machinery and do a translation of some of the parameters. */
   if (use_dengo == TRUE) {
+      if (MultiSpecies > 0){
+          ENZO_FAIL("MultiSpecies should not be set to > 0 when you use_dengo\n");
+      }
     /*
     dengo_data->use_dengo                    = (Eint32) use_dengo;
     dengo_data->HydrogenFractionByMass         = (double) CoolData.HydrogenFractionByMass;
@@ -1945,6 +1950,10 @@ int ReadParameterFile(FILE *fptr, TopGridData &MetaData, float *Initialdt)
   case 3:  NSpecies = 11; break;
   default: NSpecies = 0;  break;
   }
+
+#ifdef USE_DENGO
+  NSpecies = 9;
+#endif
 
 #ifdef UNUSED
   if (MaximumGravityRefinementLevel == INT_UNDEFINED)

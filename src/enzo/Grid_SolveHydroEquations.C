@@ -169,6 +169,41 @@ int grid::SolveHydroEquations(int CycleNumber, int NumberOfSubgrids,
       }
     }
 
+    /*Begin Dengo*/
+#ifdef USE_DENGO
+	if ((ColourNum =
+	     FindField(H2_1Density, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+	if ((ColourNum =
+	     FindField(H2_2Density, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+	if ((ColourNum =
+	     FindField(H_1Density, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+	if ((ColourNum =
+	     FindField(H_2Density, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+	if ((ColourNum =
+	     FindField(H_m0Density, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+	if ((ColourNum =
+	     FindField(He_1Density, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+	if ((ColourNum =
+	     FindField(He_2Density, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+	if ((ColourNum =
+	     FindField(He_3Density, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+	if ((ColourNum =
+	     FindField(deDensity, FieldType, NumberOfBaryonFields)) >= 0) 
+	  colnum[++NumberOfColours] = ColourNum;
+#endif
+    
+
+    /*EndDengo*/
+
+
     /* Add "real" colour fields (metallicity, etc.) as colour variables. */
 
     int SNColourNum, MetalNum, MBHColourNum, Galaxy1ColourNum, Galaxy2ColourNum,

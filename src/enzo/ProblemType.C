@@ -184,8 +184,7 @@ int EnzoProblemType::InitializeUniformGrid(
   }
   
   /* BeginDengo */
-  if (TestProblemData.DengoChemistryModel){
-      
+#ifdef USE_DENGO
       tg.FieldType[H2_1Num = tg->NumberOfBaryonFields++] = H2_1Density;
       tg.FieldType[H2_2Num = tg->NumberOfBaryonFields++] = H2_2Density;
       tg.FieldType[H_1Num = tg->NumberOfBaryonFields++] = H_1Density;
@@ -195,7 +194,7 @@ int EnzoProblemType::InitializeUniformGrid(
       tg.FieldType[He_2Num = tg->NumberOfBaryonFields++] = He_2Density;
       tg.FieldType[He_3Num = tg->NumberOfBaryonFields++] = He_3Density;
       tg.FieldType[deNum = tg->NumberOfBaryonFields++] = deDensity;
-  }
+#endif 
   /* EndDengo */
  
   // Simon glover's chemistry models (there are several)
@@ -378,8 +377,7 @@ int EnzoProblemType::InitializeUniformGrid(
     } // if(TestProblemData.UseMetallicityField)
 
     /* BeginDengo */
-    if (TestProblemData.DengoChemistryModel){
-        
+#ifdef USE_DENGO 
         tg->BaryonField[H2_1Num][i] = TestProblemData.H2_1_FractionByMass* tg->BaryonField[H2_1Num][i]* UniformDensity;
         tg->BaryonField[H2_2Num][i] = TestProblemData.H2_2_FractionByMass* tg->BaryonField[H2_2Num][i]* UniformDensity;
         tg->BaryonField[H_1Num][i] = TestProblemData.H_1_FractionByMass* tg->BaryonField[H_1Num][i]* UniformDensity;
@@ -388,7 +386,8 @@ int EnzoProblemType::InitializeUniformGrid(
         tg->BaryonField[He_1Num][i] = TestProblemData.He_1_FractionByMass* tg->BaryonField[He_1Num][i]* UniformDensity;
         tg->BaryonField[He_2Num][i] = TestProblemData.He_2_FractionByMass* tg->BaryonField[He_2Num][i]* UniformDensity;
         tg->BaryonField[He_3Num][i] = TestProblemData.He_3_FractionByMass* tg->BaryonField[He_3Num][i]* UniformDensity;
-        tg->BaryonField[deNum][i] = TestProblemData.de_FractionByMass* tg->BaryonField[deNum][i]* UniformDensity;}
+        tg->BaryonField[deNum][i] = TestProblemData.de_FractionByMass* tg->BaryonField[deNum][i]* UniformDensity;
+#endif
     /* EndDengo */
 
 

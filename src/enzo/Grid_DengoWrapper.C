@@ -316,7 +316,7 @@ dt_cool = (grackle_data->radiative_transfer_intermediate_step == TRUE) ? dtPhoto
 
     /* Call the chemistry solver. */
 
-    if (dengo_bechem_primordial_solve_chemistry_enzo(&dengo_units, &my_fields, (double) dt_cool) == FAIL){
+    if (primordial_solve_chemistry_enzo(&dengo_units, &my_fields, (double) dt_cool) == FAIL){
         fprintf(stderr, "Error in dengo solve_chemistry.\n");
         return FAIL;
     }

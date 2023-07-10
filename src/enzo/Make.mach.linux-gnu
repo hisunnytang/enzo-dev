@@ -40,6 +40,8 @@ LOCAL_HDF5_INSTALL    = /home/kwoksun2/anaconda3/envs/openmpi_enzo
 LOCAL_GRACKLE_INSTALL = /home/kwoksun2/grackle_install
 LOCAL_HYPRE_INSTALL   = /PATH/TO/HYPRE/INSTALL   # optional
 LOCAL_DENGO_INSTALL = /home/kwoksun2/dengo_install
+LOCAL_CVODE_PATH = /home/kwoksun2/anaconda3/envs/openmpi_enzo
+LOCAL_SUITESPARSE_PATH = /home/kwoksun2/anaconda3/envs/openmpi_enzo
 
 #-----------------------------------------------------------------------
 # Compiler settings
@@ -99,7 +101,7 @@ LOCAL_INCLUDES_HDF5   = -I$(LOCAL_HDF5_INSTALL)/include # HDF5 includes
 LOCAL_INCLUDES_HYPRE  = -I$(LOCAL_HYPRE_INSTALL)/include
 LOCAL_INCLUDES_PAPI   = # PAPI includes
 LOCAL_INCLUDES_GRACKLE = -I$(LOCAL_GRACKLE_INSTALL)/include
-LOCAL_INCLUDES_DENGO   = -I$(LOCAL_DENGO_INSTALL)/include
+LOCAL_INCLUDES_DENGO   = -I$(LOCAL_DENGO_INSTALL)/include -I$(LOCAL_CVODE_PATH)/include
 
 MACH_INCLUDES         = $(LOCAL_INCLUDES_HDF5)
 MACH_INCLUDES_MPI     = $(LOCAL_INCLUDES_MPI)
@@ -112,12 +114,13 @@ MACH_INCLUDES_DENGO  = $(LOCAL_INCLUDES_DENGO)
 #-----------------------------------------------------------------------
 
 LOCAL_LIBS_MPI    = # MPI libraries
-LOCAL_LIBS_HDF5   = -L$(LOCAL_HDF5_INSTALL)/lib -lhdf5 -lz
+LOCAL_LIBS_HDF5   = -L$(LOCAL_HDF5_INSTALL)/lib -lhdf5  -lhdf5_hl -lz
 LOCAL_LIBS_HYPRE  = -L$(LOCAL_HYPRE_INSTALL)/lib -lHYPRE
 LOCAL_LIBS_PAPI   = # PAPI libraries
 LOCAL_LIBS_MACH   = -lgfortran # Machine-dependent libraries
 LOCAL_LIBS_GRACKLE = -L$(LOCAL_GRACKLE_INSTALL)/lib -lgrackle
-LOCAL_LIBS_DENGO   =  -L$(LOCAL_HDF5_INSTALL)/lib -lhdf5_hl -lhdf5 -lstdc++ -fopenmp -L$(LOCAL_DENGO_INSTALL)/lib -ldengo
+#LOCAL_LIBS_DENGO   =  -L$(LOCAL_HDF5_INSTALL)/lib -lhdf5_hl -lhdf5 -lstdc++ -fopenmp -L$(LOCAL_DENGO_INSTALL)/lib -ldengo
+LOCAL_LIBS_DENGO   = -L$(LOCAL_DENGO_INSTALL)/lib -ldengo -Wl,-rpath-link=$(LOCAL_SUITESPARSE_PATH) -Wl,-rpath-link=$(LOCAL_CVODE_PATH) -lsundials_cvode -lsundials_nvecserial -lsundials_sunmatrixsparse -lsundials_sunlinsolklu
 
 MACH_LIBS         = $(LOCAL_LIBS_HDF5) $(LOCAL_LIBS_MACH)
 MACH_LIBS_MPI     = $(LOCAL_LIBS_MPI)

@@ -32,7 +32,8 @@ extern "C" {
 #endif
 
 #ifdef USE_DENGO
-#include <dengo_bechem_primordial_solver.h>
+//#include <dengo_cvode_primordial_solver.h>
+#include <primordial_solver.h>
 #endif
 
 
